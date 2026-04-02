@@ -1,0 +1,17 @@
+import { createContext } from "react";
+import { useState } from "react";
+
+export const SongContext = createContext(null);
+
+export const SongContextProvider = ({ children }) => {
+  const [song, setSong] = useState(null);
+  
+  const [loading, setLoading] = useState(false)
+
+  return (
+    <SongContext.Provider value={{ loading, setLoading, song, setSong }}>
+      {children}
+    </SongContext.Provider>
+  )
+
+};

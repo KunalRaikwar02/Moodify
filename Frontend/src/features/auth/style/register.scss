@@ -1,0 +1,204 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&display=swap');
+
+$color-deep-black: #050505;
+$color-vanta-white: #ffffff;
+$color-accent-red: #ff3e3e;
+
+.anton-font { font-family: 'Anton', sans-serif; }
+.mono-font { font-family: 'Space Mono', monospace; }
+
+.login-vanta-page {
+    min-height: 100vh;
+    background-color: $color-deep-black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.noise-floor {
+    position: fixed;
+    inset: 0;
+    background: url('https://grainy-gradients.vercel.app/noise.svg');
+    opacity: 0.05; 
+    z-index: 1; 
+    pointer-events: none;
+}
+
+.vanta-container {
+    display: flex; 
+    width: 100%; 
+    max-width: 1100px; 
+    min-height: 700px;
+    background-color: $color-vanta-white; 
+    border-radius: 4px;
+    overflow: hidden; 
+    box-shadow: 0 50px 100px rgba(0, 0, 0, 0.9); 
+    z-index: 10;
+    @media (max-width: 900px) { flex-direction: column; }
+}
+
+.vanta-branding {
+    flex: 1.2; 
+    background-image: url('https://w0.peakpx.com/wallpaper/457/322/HD-wallpaper-blue-and-black-swirl-abstract.jpg');
+    background-size: cover; 
+    background-position: center;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    color: $color-vanta-white; 
+    position: relative; 
+    padding: 40px;
+    &::before { content: ""; position: absolute; 
+    inset: 0; 
+    background: rgba(0, 0, 0, 0.6); }
+}
+
+.vanta-branding-content {
+    position: relative; 
+    z-index: 1; 
+    text-align: center;
+    h1 { font-size: clamp(40px, 5vw, 65px); 
+        line-height: 0.95; 
+        letter-spacing: 2px; 
+        margin-bottom: 20px; }
+    p { font-size: 14px; opacity: 0.7; 
+        line-height: 1.8; 
+        letter-spacing: 1px; }
+    .branding-footer {
+        margin-top: 30px; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        gap: 10px;
+        .dot { width: 6px; 
+            height: 6px; 
+            background: $color-accent-red; 
+            border-radius: 50%; }
+        .line { width: 40px; 
+            height: 1px; 
+            background: rgba(255,255,255,0.2); }
+    }
+}
+
+.vanta-form-wrapper {
+    flex: 0.8; 
+    background: $color-vanta-white; 
+    padding: 40px 60px;
+    display: flex; 
+    align-items: center;
+    @media (max-width: 900px) { padding: 40px 20px; }
+}
+
+.vanta-form-card { width: 100%; }
+.vanta-form-title {
+    font-size: 40px; 
+    color: $color-deep-black; 
+    margin-bottom: 30px;
+    letter-spacing: 2px; 
+    border-bottom: 4px solid $color-deep-black; 
+    display: inline-block;
+}
+
+.vanta-form { display: flex; 
+    flex-direction: column; 
+    gap: 20px; }
+
+.vanta-group {
+    display: flex; 
+    flex-direction: column; 
+    gap: 5px;
+    label { font-size: 10px; 
+        font-weight: 700; 
+        color: #999; 
+        letter-spacing: 2px; }
+    .flex-label { display: flex; 
+        justify-content: space-between; }
+    input {
+        width: 100%; 
+        padding: 12px 0; 
+        background: transparent; 
+        border: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1); 
+        font-size: 15px;
+        color: $color-deep-black; 
+        transition: 0.3s;
+        &:focus { outline: none; border-bottom-color: $color-accent-red; }
+    }
+}
+
+.password-group {
+    .vanta-input-wrap { position: relative; 
+        input { padding-right: 80px; } }
+    .vanta-toggle {
+        position: absolute; 
+        right: 0; 
+        bottom: 12px;
+        background: transparent; 
+        border: none; 
+        cursor: pointer;
+        font-size: 10px; 
+        color: $color-accent-red; 
+        font-weight: 700;
+    }
+}
+
+.strength-text { font-size: 9px; 
+    color: $color-accent-red; }
+.strength-meter {
+    height: 2px; 
+    background: #eee; 
+    margin-top: 5px; 
+    width: 100%;
+    .fill { height: 100%; width: 0; transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1); }
+    .fill.s-1 { width: 25%; background: $color-accent-red; }
+    .fill.s-2 { width: 50%; background: #ffa502; }
+    .fill.s-3 { width: 75%; background: #2ed573; }
+    .fill.s-4 { width: 100%; background: #1dd1a1; }
+}
+
+.vanta-error { color: $color-accent-red; 
+    font-size: 10px; 
+    letter-spacing: 1px; 
+}
+
+.vanta-btn-submit {
+    background-color: 
+    $color-deep-black; 
+    color: $color-vanta-white;
+    border: none; 
+    padding: 16px; 
+    font-size: 15px; 
+    letter-spacing: 3px;
+    cursor: pointer; transition: 0.4s; 
+    margin-top: 15px;
+    &:hover { background-color: $color-accent-red; 
+        transform: translateY(-3px); 
+        box-shadow: 0 10px 20px rgba(255, 62, 62, 0.2); }
+}
+
+.vanta-register-text {
+    margin-top: 30px; 
+    font-size: 10px; 
+    color: #999; 
+    text-align: center; 
+    letter-spacing: 1px;
+    a { color: $color-deep-black; 
+        font-weight: 700; 
+        text-decoration: none; 
+        &:hover { color: $color-accent-red; } }
+}
+
+.vanta-spinner {
+    width: 18px; 
+    height: 18px; 
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: #fff; 
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite; 
+    display: inline-block;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
