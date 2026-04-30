@@ -3,15 +3,16 @@ import { useNavigate } from 'react-router-dom'
 import FaceExpression from '../../Expression/components/FaceExpression'
 import Player from '../components/Player'
 import { useSong } from '../hooks/useSong'
+import { useAuth } from '../../auth/hooks/useAuth'
 import './home.scss'
 
 const Home = () => {
     const navigate = useNavigate()
     const { handleGetSong, song } = useSong()
+    const { handleLogout } = useAuth() 
 
-    const handleLogout = () => {
-        localStorage.clear()
-        sessionStorage.clear() 
+    const onLogout = async () => {
+        await handleLogout()
         navigate('/login')
     }
 
@@ -19,7 +20,7 @@ const Home = () => {
         <main className="home-page">
             <div className="noise-floor"></div>
 
-            <button className="logout-btn" onClick={handleLogout}>
+            <button className="logout-btn" onClick={onLogout}> 
                 TERMINATE_SESSION [ESC]
             </button>
             
