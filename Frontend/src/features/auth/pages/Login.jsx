@@ -4,22 +4,26 @@ import { useAuth } from '../hooks/useAuth'
 import "../style/login.scss"
 
 const Login = () => {
-    const { loading, handleLogin } = useAuth()
+    const { handleLogin } = useAuth()
     const navigate = useNavigate()
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [showPassword, setShowPassword] = useState(false)
     const [error, setError] = useState("")
+    const [submitting, setSubmitting] = useState(false) 
 
     async function handleSubmit(e) {
         e.preventDefault()
         setError("")
+        setSubmitting(true)
         try {
             await handleLogin({ email, password })
             navigate("/")
         } catch (err) {
             setError("ACCESS DENIED. INVALID CREDENTIALS.")
+        } finally {
+            setSubmitting(false)
         }
     }
 
@@ -28,7 +32,6 @@ const Login = () => {
             <div className="noise-floor"></div>
             
             <div className="vanta-container">
-             
                 <div className="vanta-branding">
                     <div className="vanta-branding-content">
                         <h1 className="anton-font">YOUR VIBE,<br />OUR MUSIC.</h1>
@@ -81,9 +84,9 @@ const Login = () => {
                             <button 
                                 type="submit" 
                                 className="vanta-btn-submit anton-font"
-                                disabled={loading}
+                                disabled={submitting}
                             >
-                                {loading ? <span className="vanta-spinner"></span> : "JOIN VIBE →"}
+                                {submitting ? <span className="vanta-spinner"></span> : "JOIN VIBE →"}
                             </button>
                         </form>
 

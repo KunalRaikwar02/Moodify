@@ -12,9 +12,10 @@ const Register = () => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
     const [error, setError] = useState("")
     const [passwordStrength, setPasswordStrength] = useState(0)
+    const [submitting, setSubmitting] = useState(false)
 
     const navigate = useNavigate()
-    const { loading, handleRegister } = useAuth()
+    const { handleRegister } = useAuth()
 
     const handlePasswordChange = (e) => {
         const pwd = e.target.value
@@ -33,11 +34,14 @@ const Register = () => {
         if (password !== confirmPassword) return setError("PASSPHRASE_MISMATCH")
         if (password.length < 6) return setError("MINIMUM_6_CHARACTERS_REQUIRED")
 
+        setSubmitting(true)
         try {
             await handleRegister({ username, email, password })
             navigate("/")
         } catch (err) {
             setError("REGISTRATION_FAILED")
+        } finally {
+            setSubmitting(false)
         }
     }
 
@@ -46,7 +50,6 @@ const Register = () => {
             <div className="noise-floor"></div>
             
             <div className="vanta-container">
-           
                 <div className="vanta-branding">
                     <div className="vanta-branding-content">
                         <h1 className="anton-font">YOUR MUSIC,<br />YOUR MOOD.</h1>
@@ -58,84 +61,83 @@ const Register = () => {
                     </div>
                 </div>
 
-               <div className="vanta-form-wrapper">
-    <div className="vanta-form-card">
-        <h2 className="vanta-form-title anton-font">REGISTER</h2>
+                <div className="vanta-form-wrapper">
+                    <div className="vanta-form-card">
+                        <h2 className="vanta-form-title anton-font">REGISTER</h2>
 
-        <form onSubmit={handleSubmit} className="vanta-form">
-            <div className="vanta-group">
-                <label className="mono-font">USERNAME</label>
-      
-                <input 
-                    type="text" 
-                    placeholder="unique_username" 
-                    value={username} 
-                    onChange={(e) => setUsername(e.target.value)} 
-                    required 
-                />
-            </div>
+                        <form onSubmit={handleSubmit} className="vanta-form">
+                            <div className="vanta-group">
+                                <label className="mono-font">USERNAME</label>
+                                <input 
+                                    type="text" 
+                                    placeholder="unique_username" 
+                                    value={username} 
+                                    onChange={(e) => setUsername(e.target.value)} 
+                                    required 
+                                />
+                            </div>
 
-            <div className="vanta-group">
-                <label className="mono-font">EMAIL_ADDRESS</label>
-                <input 
-                    type="email" 
-                    placeholder="name@example.com" 
-                    value={email} 
-                    onChange={(e) => setEmail(e.target.value)} 
-                    required 
-                />
-            </div>
+                            <div className="vanta-group">
+                                <label className="mono-font">EMAIL_ADDRESS</label>
+                                <input 
+                                    type="email" 
+                                    placeholder="name@example.com" 
+                                    value={email} 
+                                    onChange={(e) => setEmail(e.target.value)} 
+                                    required 
+                                />
+                            </div>
 
-            <div className="vanta-group password-group">
-                <label className="mono-font flex-label">
-                    PASSWORD
-                    <span className={`strength-text s-${passwordStrength}`}>
-                        [{['WEAK', 'FAIR', 'GOOD', 'STRONG', 'SECURE'][passwordStrength]}]
-                    </span>
-                </label>
-                <div className="vanta-input-wrap">
-                    <input 
-                        type={showPassword ? "text" : "password"} 
-                        placeholder="••••••••" 
-                        value={password} 
-                        onChange={handlePasswordChange} 
-                        required 
-                    />
-                    <button type="button" className="vanta-toggle mono-font" onClick={() => setShowPassword(!showPassword)}>
-                        {showPassword ? "[ HIDE ]" : "[ SHOW ]"}
-                    </button>
+                            <div className="vanta-group password-group">
+                                <label className="mono-font flex-label">
+                                    PASSWORD
+                                    <span className={`strength-text s-${passwordStrength}`}>
+                                        [{['WEAK', 'FAIR', 'GOOD', 'STRONG', 'SECURE'][passwordStrength]}]
+                                    </span>
+                                </label>
+                                <div className="vanta-input-wrap">
+                                    <input 
+                                        type={showPassword ? "text" : "password"} 
+                                        placeholder="••••••••" 
+                                        value={password} 
+                                        onChange={handlePasswordChange} 
+                                        required 
+                                    />
+                                    <button type="button" className="vanta-toggle mono-font" onClick={() => setShowPassword(!showPassword)}>
+                                        {showPassword ? "[ HIDE ]" : "[ SHOW ]"}
+                                    </button>
+                                </div>
+                                <div className="strength-meter"><div className={`fill s-${passwordStrength}`}></div></div>
+                            </div>
+
+                            <div className="vanta-group password-group">
+                                <label className="mono-font">CONFIRM PASSWORD</label> 
+                                <div className="vanta-input-wrap">
+                                    <input 
+                                        type={showConfirmPassword ? "text" : "password"} 
+                                        placeholder="••••••••" 
+                                        value={confirmPassword} 
+                                        onChange={(e) => setConfirmPassword(e.target.value)} 
+                                        required 
+                                    />
+                                    <button type="button" className="vanta-toggle mono-font" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+                                        {showConfirmPassword ? "[ HIDE ]" : "[ SHOW ]"}
+                                    </button>
+                                </div>
+                            </div>
+
+                            {error && <p className="vanta-error mono-font">{error}</p>}
+
+                            <button type="submit" className="vanta-btn-submit anton-font" disabled={submitting}>
+                                {submitting ? <span className="vanta-spinner"></span> : "CREATE_ACCOUNT →"}
+                            </button>
+                        </form>
+
+                        <p className="vanta-register-text mono-font">
+                            ALREADY A MEMBER? <Link to="/login">LOGIN_HERE</Link>
+                        </p>
+                    </div>
                 </div>
-                <div className="strength-meter"><div className={`fill s-${passwordStrength}`}></div></div>
-            </div>
-
-            <div className="vanta-group password-group">
-                <label className="mono-font">CONFIRM PASSWORD</label> 
-                <div className="vanta-input-wrap">
-                    <input 
-                        type={showConfirmPassword ? "text" : "password"} 
-                        placeholder="••••••••" 
-                        value={confirmPassword} 
-                        onChange={(e) => setConfirmPassword(e.target.value)} 
-                        required 
-                    />
-                    <button type="button" className="vanta-toggle mono-font" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
-                        {showConfirmPassword ? "[ HIDE ]" : "[ SHOW ]"}
-                    </button>
-                </div>
-            </div>
-
-            {error && <p className="vanta-error mono-font">{error}</p>}
-
-            <button type="submit" className="vanta-btn-submit anton-font" disabled={loading}>
-                {loading ? <span className="vanta-spinner"></span> : "CREATE_ACCOUNT →"}
-            </button>
-        </form>
-
-        <p className="vanta-register-text mono-font">
-            ALREADY A MEMBER? <Link to="/login">LOGIN_HERE</Link>
-        </p>
-    </div>
-</div>
             </div>
         </main>
     )
