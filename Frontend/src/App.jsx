@@ -4,7 +4,6 @@ import "./features/shared/styles/global.scss"
 import { AuthProvider } from './features/auth/auth.contex'
 import { SongContextProvider } from './features/home/song.context'
 
-
 function App() {
 
   return (
@@ -15,5 +14,4 @@ function App() {
     </AuthProvider>
   )
 }
-
 export default App
